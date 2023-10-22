@@ -1,6 +1,6 @@
-bin/
+bin\
 *.uxf
 *.class
 *.umf
 .classpath
-module-info.java
+.project
