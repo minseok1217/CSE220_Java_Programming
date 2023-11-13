@@ -1,4 +1,5 @@
-public class Point3D{
+
+public class Point_3D{
 	private double x = 0.0;
 	private double y = 0.0;
 	private double z = 0.0;
@@ -10,13 +11,13 @@ public class Point3D{
 		System.out.println(String.format("(%f, %f, %f)", x, y, z));
 	}
 	
-	public Point3D(double x, double y, double z){
+	public Point_3D(double x, double y, double z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public Point3D(){}
+	public Point_3D(){}
 	
 	public void setcord(double x, double y, double z) {
 		this.x = x;
@@ -28,7 +29,7 @@ public class Point3D{
 		return Math.sqrt(x * x + y * y + z * z);
 	}
 
-	public double getdistance(Point3D p) {
+	public double getdistance(Point_3D p) {
 		// Math.pow(x-p.x, 2); // 제곱하는 함수!!!!!
 		// return Math.sqrt(((x-p.x)*(x-p.x))+((y-p.y)*(y-p.y))+((z-p.z)*(z-p.z)));
 		return Math.sqrt(Math.pow(x - p.x, 2)+Math.pow(y - p.y, 2)+Math.pow(z - p.z, 2));

@@ -1,8 +1,9 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Lab01test {
+public class Lab01Test {
 
     public static void main(String[] args) throws IOException {
         useFunction();
@@ -15,7 +16,7 @@ public class Lab01test {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		// int number = Integer.parseInt(br.readLine());
 
-        Tools f = new Tools();
+        Functions f = new Functions();
         // f1.getTriples(50);
 		System.out.println("숫자를 입력해주세요.");
         // int number = scanner.nextInt(); // Scanner 객체를 사용하여 정수 입력 받기
@@ -35,8 +36,8 @@ public class Lab01test {
     }
 
     public static void usePoint3D() {
-		Point3D p1 = new Point3D(0.0, 0.0, 0.0);
-		Point3D p2 = new Point3D();
+		Point_3D p1 = new Point_3D(0.0, 0.0, 0.0);
+		Point_3D p2 = new Point_3D();
 		System.out.println(p1); // => 주소 출력하는거
 		System.out.println(p2);	// => 주소 출력하는거
 		p1.displayPoint();

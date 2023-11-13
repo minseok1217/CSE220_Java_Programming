@@ -67,6 +67,8 @@ public class Craps {
 		if (bankBalance <= 0) {
 			System.out.println("Sorry. You busted!");
 		}
+
+      input.close();
 	}
 
    public String chatter() {

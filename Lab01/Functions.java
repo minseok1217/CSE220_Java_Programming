@@ -1,3 +1,4 @@
+
 public class Functions {
 	public void getTriples(int bound) {
 		for (int i=1; i <= bound;i++) {
