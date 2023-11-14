@@ -5,3 +5,5 @@ bin\
 *.umf
 .classpath
 .project
+.vscode
+lib/
