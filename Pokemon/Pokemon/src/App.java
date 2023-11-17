@@ -1,6 +1,5 @@
-// import java.awt.Color;
+import javax.crypto.SealedObject;
 
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -17,88 +16,88 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-// import javafx.scene.text.FontWeight;
 
-public class App extends Application{
-    private TextField nameField= new TextField() ;
-    // private MenuItem nameChoice = new MenuItem("name");
+public class App extends Application {
+    private TextField nameField = new TextField();
     private User user = new User();
-    private Timeline fistTime = new Timeline();
-    private Timeline secondTime = new Timeline();
-    private Explanation_image ex_image; 
 
     @Override
-    public void start(Stage primarStage) throws Exception{
-        GridPane input_user_name = new GridPane( );
-        input_user_name.setPadding (new Insets (10));
-        input_user_name.setHgap(10) ;
+    public void start(Stage primaryStage) throws Exception {
+        GridPane inputUserName = new GridPane();
+        inputUserName.setPadding(new Insets(10));
+        inputUserName.setHgap(10);
 
-        ImageView image;
-        
-        Label nameLabel = new Label("user name") ;
-        Button nameButton = new Button("save"); 
-        input_user_name.add(nameLabel,0,0);
-        input_user_name.add(nameButton, 0, 1, 2, 1);
-        input_user_name.add(nameField,1,0);
-        input_user_name.setAlignment(Pos.CENTER);
+        Label nameLabel = new Label("User Name");
+        Button nameButton = new Button("Save");
+        inputUserName.add(nameLabel, 0, 0);
+        inputUserName.add(nameButton, 2, 0, 2, 1);
+        inputUserName.add(nameField, 1, 0);
+        inputUserName.setAlignment(Pos.CENTER);
 
-        //이름 저장해주기
-        nameButton.setOnAction(event -> changeName(event));
+        nameButton.setOnAction(event -> changeName(primaryStage));
 
-        //image로 explanation 이어가기
-        // ImageView first_cut = new ImageView(new Image())
-        // image = new ImageView(ex_image.WELCOME.getImage());
-
-
-        primarStage.setTitle("PokeMon");
-        primarStage.setScene((new Scene(input_user_name,500, 300)));
-        
-
-        primarStage.show();
-
+        primaryStage.setTitle("PokeMon");
+        primaryStage.setScene(new Scene(inputUserName, 500, 300));
+        primaryStage.show();
     }
 
-    public void changeName(ActionEvent event){
-
+    private void changeName(Stage primaryStage) {
         String newName = nameField.getText();
         user.setUserName(newName);
-        String str_ex = "님 환영합니다.";
-        String str = user.getUserName();
-        Label start_page = new Label(str + str_ex);
-        BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, null, null);
-        Background background = new Background(backgroundFill);
-        // user.printName();
-        // Stage explanationStage = new Stage();
-        // GridPane explanation = new GridPane();
-        // explanationStage.setScene(new Scene(explanation, 500, 300));
-        // explanationStage.setTitle("설명 창");
-        // explanation(explanationStage, explanation)
-        // explanationStage.show();
-        // Stage primaryStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        // primaryStage.close();
+        String welcomeMessage = user.getUserName() + "님 환영합니다.";
+
+        showWelcomeMessage(primaryStage, welcomeMessage);
     }
 
-    public void explanation(Stage explationStage, GridPane explation){
-        String str_ex = "님 환영합니다.";
-        String str = user.getUserName();
-        Label start_page = new Label(str + str_ex);
-        start_page.setTextFill(Color.WHITE);
-        //배경과 글자 설정
-        start_page.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, null, null);
-        Background background = new Background(backgroundFill);
-        explation.setBackground(background);
-        explation.setPadding (new Insets (20));
-        explation.setHgap(10) ;
-        explation.add(start_page,0,0);
-        explation.setAlignment(Pos.CENTER);
+    private void showWelcomeMessage(Stage primaryStage, String welcomeMessage) {
+        GridPane welcomePane = new GridPane();
+        welcomePane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        welcomePane.setPadding(new Insets(20));
+        welcomePane.setHgap(10);
+
+        Label welcomeLabel = new Label(welcomeMessage);
+        welcomeLabel.setTextFill(Color.WHITE);
+        welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+
+        welcomePane.add(welcomeLabel, 0, 0);
+        welcomePane.setAlignment(Pos.CENTER);
+
+        Stage welcomeStage = new Stage();
+        welcomeStage.setScene(new Scene(welcomePane, 500, 300));
+        welcomeStage.setTitle("WelCome Mesege");
+        welcomeStage.show();
+        welcomePane.setOnMouseClicked(event -> goToNextScreen(welcomeStage));
     }
 
-    // public void 
+    private void goToNextScreen(Stage currentStage) {
+        currentStage.close();
+
+       GridPane welcomePane_2 = new GridPane();
+        welcomePane_2.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        welcomePane_2.setPadding(new Insets(20));
+        welcomePane_2.setHgap(10);
+
+        Label welcomeLabel_2 = new Label("야생 포켓몬을 잡을 때 \n사용할 포켓몬을 선택해주세요.");
+        welcomeLabel_2.setTextFill(Color.WHITE);
+        welcomeLabel_2.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+
+        welcomePane_2.add(welcomeLabel_2, 0, 0);
+        welcomePane_2.setAlignment(Pos.CENTER);
+
+        Stage welcomeStage = new Stage();
+        welcomeStage.setScene(new Scene(welcomePane_2, 500, 300));
+        welcomeStage.setTitle("WelCome Mesege");
+        welcomeStage.show();
+    }
+
+    private void selectPokemonScreen(Stage currentStage){
+        currentStage.close();
+        GridPane seletePane_2 = new GridPane();
+        
+    }
+
 
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
-
-    
 }
