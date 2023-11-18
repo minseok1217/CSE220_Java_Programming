@@ -1,7 +1,4 @@
-import javax.crypto.SealedObject;
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,6 +17,8 @@ import javafx.stage.Stage;
 public class App extends Application {
     private TextField nameField = new TextField();
     private User user = new User();
+    private ImageView[][] pokemon_grid = new ImageView[2][3];
+    // private Group pokemonGrid = new Group();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -84,18 +83,74 @@ public class App extends Application {
         welcomePane_2.add(welcomeLabel_2, 0, 0);
         welcomePane_2.setAlignment(Pos.CENTER);
 
-        Stage welcomeStage = new Stage();
-        welcomeStage.setScene(new Scene(welcomePane_2, 500, 300));
-        welcomeStage.setTitle("WelCome Mesege");
-        welcomeStage.show();
+        Stage welcomeStage_2 = new Stage();
+        welcomeStage_2.setScene(new Scene(welcomePane_2, 500, 300));
+        welcomeStage_2.setTitle("WelCome Mesege");
+        welcomeStage_2.show();
+        welcomePane_2.setOnMouseClicked(event -> selectPokemonScreen(welcomeStage_2));
     }
 
     private void selectPokemonScreen(Stage currentStage){
         currentStage.close();
-        GridPane seletePane_2 = new GridPane();
+        
+        
+        for (int i = 0; i < pokemon_grid.length; i++) {
+            for (int j = 0; j < pokemon_grid[i].length; j++) {
+                Pokemon pokemon = getDesiredPokemon(i, j);
+                ImageView imageView = new ImageView(pokemon.getImage());
+                imageView.setFitWidth(100); 
+                imageView.setFitHeight(100);
+
+                pokemon_grid[i][j] = imageView;
+            }
+        }
+
+        GridPane seletePane = new GridPane();
+        for (int i = 0; i < pokemon_grid.length; i++) {
+            for (int j = 0; j < pokemon_grid[i].length; j++) {
+                addClickEventHandler(pokemon_grid[i][j]);
+                seletePane.add(pokemon_grid[i][j], j, i);
+            }
+        }
+        Stage seleteStage_2 = new Stage();
+        seleteStage_2.setScene(new Scene(seletePane, 300, 250));
+        seleteStage_2.setTitle("WelCome Mesege");
+        seleteStage_2.show();
+        seletePane.setOnMouseClicked(event -> start_battle(seleteStage_2));
+    }
+
+    private void start_battle(Stage currentStage){
+        currentStage.close();
         
     }
 
+
+    private Pokemon getDesiredPokemon(int row, int col) {
+        Pokemon[][] pokemonGrid = {
+                {Pokemon.BULBASAUR, Pokemon.CHARMANDER, Pokemon.CYNDAQUIL},
+                {Pokemon.EEVEE, Pokemon.JIGGLYPUFF, Pokemon.SQUIRTLE}
+        };
+        return pokemonGrid[row][col];
+    }
+
+    private void addClickEventHandler(ImageView imageView) {
+        imageView.setOnMouseClicked(event -> {
+            // Handle the click event
+            handlePokemonSelection((ImageView) event.getSource());
+        });
+    }
+
+    private void handlePokemonSelection(ImageView selectedImageView) {
+        for (int i = 0; i < pokemon_grid.length; i++) {
+            for (int j = 0; j < pokemon_grid[i].length; j++) {
+                if (pokemon_grid[i][j] == selectedImageView) {
+                    Pokemon selectedPokemon = getDesiredPokemon(i, j);
+                    System.out.println("Selected Pokemon: " + selectedPokemon);
+                    break;
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
