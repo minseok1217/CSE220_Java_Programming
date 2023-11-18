@@ -8,7 +8,7 @@ public enum Pokemon {
 	JIGGLYPUFF("./image/jigglypuff.png"),	// 푸린 
 	SQUIRTLE("./image/squirtle.png"),	// 꼬부기
 	
-	PIKACHU("./image/pikachu.png");		// 피카추 
+	PIKACHU("./image/pikachu.png");		// 피카츄
 	
 	
 
