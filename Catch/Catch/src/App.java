@@ -21,9 +21,6 @@ public class App extends Application {
     private ImageView[][] pokemon_grid = new ImageView[2][3];
     private Pokemon user_pokemon;
     Pokemon wild = Pokemon.PIKACHU;
-    private ImageView userPokemonImageView;
-    private ImageView wildPokemonImageView;
-    
     // private Group pokemonGrid = new Group();
 
     @Override
@@ -211,6 +208,7 @@ public class App extends Application {
     private void showCatchPokemonScreen(Stage currenStage){
         // currenStage.close();
         Start_Catching sc = new Start_Catching();
+        sc.setting(user, user_pokemon);
         sc.run(currenStage);
     }
 
