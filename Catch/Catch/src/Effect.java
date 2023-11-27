@@ -1,8 +1,11 @@
 import javafx.scene.image.Image;
 
 public enum Effect {
-    EXPLOSION("./image/explosion.png");
-    // EXPLOSION_2("./image/explosion.png");
+    EXPLOSION("./image/explosion.png"),
+    BEFROEWILD("./image/before_wild.png"),
+    POKE("./image/pokemon.png"),
+    BIRTHDAY_LEFT("./image/birthday_left.png"),
+    BIRTHDAY_RIGHT("./image/birthday_right.png");;
 
     private Image image;
     private Effect(String filename){

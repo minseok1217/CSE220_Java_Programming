@@ -1,5 +1,6 @@
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,6 +35,11 @@ public class Start_Catching extends Application{
     private Skill wild_skill = new Pikachu_skill();
     private ImageView explossion_wild = new ImageView(Effect.EXPLOSION.getImage());
     private ImageView explossion_user = new ImageView(Effect.EXPLOSION.getImage());
+    private int MOVEMENT_SPEED = 600;
+    private ImageView throw_ball = new ImageView(Pokemon.BALL.getImage());
+    private ImageView catch_ball = new ImageView(Pokemon.BALL.getImage());
+    ImageView birthday_left = new ImageView(Effect.BIRTHDAY_LEFT.getImage());
+    ImageView birthday_right = new ImageView(Effect.BIRTHDAY_RIGHT.getImage());
     
 
 
@@ -88,11 +94,23 @@ public class Start_Catching extends Application{
         battle_stage.getChildren().add(wildPokemonImageView);
 
         ImageView monsterball = new ImageView(Pokemon.BALL.getImage());
+        
+
         StackPane root = new StackPane();
-        root.getChildren().addAll(battle_stage, monsterball);
+        root.getChildren().addAll(battle_stage, monsterball, throw_ball, catch_ball);
         monsterball.setFitWidth(80);
         monsterball.setFitHeight(80);
-        StackPane.setAlignment(monsterball, Pos.BOTTOM_RIGHT);
+        throw_ball.setFitHeight(50);
+        throw_ball.setFitWidth(50);
+        throw_ball.setOpacity(0);
+
+        catch_ball.setFitHeight(50);
+        catch_ball.setFitWidth(50);
+        catch_ball.setOpacity(0);
+        
+        StackPane.setAlignment(catch_ball, Pos.TOP_RIGHT);
+        StackPane.setAlignment(throw_ball, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(monsterball, Pos.BOTTOM_RIGHT);        
 
         explossion_wild.setFitWidth(100);
         explossion_wild.setFitHeight(100);
@@ -137,8 +155,6 @@ public class Start_Catching extends Application{
 
         Label userPokemonHpLabel = new Label("체력: " + Integer.toString(user_hp));
         Label wildPokemonHpLabel = new Label("체력: " + Integer.toString(wild_hp));
-        // Label skill_explain = new Label("공격격");
-
 
         GridPane.setRowIndex(userPokemonHpLabel, 2); 
         GridPane.setColumnIndex(userPokemonHpLabel, 0); 
@@ -150,24 +166,17 @@ public class Start_Catching extends Application{
         wildPokemonHpLabel.setTranslateY(55);
         wildPokemonHpLabel.setTranslateX(10);
 
-        // skill_explain.setOpacity(1);
-        // GridPane.setRowIndex(skill_explain, 0);
-        // GridPane.setColumnIndex(skill_explain, 0);
-        // battle_stage.getChildren().add(skill_explain);
-
-
         Scene battleScene = new Scene(root, 600, 400);
         Stage battleStage = new Stage();
         battleStage.setScene(battleScene);
         battleStage.setTitle("Battle");
         battleStage.show();
 
-        
         skillButton_1.setOnAction(event -> {
             wild_hp = sk.first(wild_hp);
             user_hp = attack(user_hp);
             Twinkle_wild();
-            wildPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+            wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
@@ -217,6 +226,8 @@ public class Start_Catching extends Application{
         });
         monsterball.setOnMouseClicked(event ->{
             double d = Math.random();
+            move(450.0, -300.0);
+            // catch_time();    
             double percent = (600.0 - wild_hp) / 600;
             System.out.println(wild_hp);
             System.out.println(String.format("%f %f", d, percent));
@@ -235,6 +246,11 @@ public class Start_Catching extends Application{
         successPane.setPadding(new Insets(20));
         ImageView pikachuImageView = new ImageView(Pokemon.PIKACHU.getImage());
     
+        
+        successPane.getChildren().addAll(birthday_left, birthday_right);
+        StackPane.setAlignment(birthday_right, Pos.TOP_RIGHT);
+        StackPane.setAlignment(birthday_left, Pos.TOP_LEFT);
+
         Label successLabel = new Label("야생 피카츄를 잡았습니다!!!!!!");
         successLabel.setTextFill(Color.BLACK);
         successLabel.setFont(Font.font("Arial", FontWeight.BOLD, 30));
@@ -242,9 +258,6 @@ public class Start_Catching extends Application{
         successPane.getChildren().addAll(pikachuImageView, successLabel);
         StackPane.setAlignment(pikachuImageView, Pos.CENTER);
         StackPane.setAlignment(successLabel, Pos.BOTTOM_CENTER);
-    
-        // Scene successScene = new Scene(successPane, 500, 300);
-        // successScene.setFill(Color.WHITE);
     
         Stage successStage = new Stage();
         successStage.setScene(new Scene(successPane, 500, 300)  );
@@ -297,21 +310,13 @@ public class Start_Catching extends Application{
             // return hp;
     }
 
-    private void Delay_time(int s){
-        try {
-                Thread.sleep(s);
-                
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-    }
-
     private void Twinkle_user(){
         // FadeTransition fadeTransition_user = new FadeTransition(Duration.seconds(1d), explossion_user);
         // fadeTransition_user.setFromValue(1.0);
         // fadeTransition_user.setToValue(0.0);
         // fadeTransition_user.setCycleCount(1);
         // fadeTransition_user.play();
+
         explossion_user.setOpacity(1); 
         FadeTransition fadeTransition_user = new FadeTransition(Duration.seconds(1d), explossion_user);
         fadeTransition_user.setFromValue(1.0);
@@ -328,6 +333,58 @@ public class Start_Catching extends Application{
         fadeTransition_wild.setCycleCount(1);
         fadeTransition_wild.play();
     }
+
+    private void Twinkle_birthday(){
+        FadeTransition fadeTransition_birthday_left = new FadeTransition(Duration.seconds(1d), birthday_left);
+        fadeTransition_birthday_left.setFromValue(1.0);
+        fadeTransition_birthday_left.setToValue(0.0);
+        fadeTransition_birthday_left.setCycleCount(3);
+        fadeTransition_birthday_left.play();
+
+        FadeTransition fadeTransition_birthday_right = new FadeTransition(Duration.seconds(1d), birthday_right);
+        fadeTransition_birthday_right.setFromValue(1.0);
+        fadeTransition_birthday_right.setToValue(0.0);
+        fadeTransition_birthday_right.setCycleCount(3);
+        fadeTransition_birthday_right.play();
+    }
+
+    private void move(double deltaX , double deltaY ) {
+        throw_ball.setOpacity(1);
+        TranslateTransition moveTransition = new TranslateTransition(Duration.millis(MOVEMENT_SPEED), throw_ball);
+        moveTransition.setByX(deltaX);
+        moveTransition.setByY(deltaY);
+        moveTransition.setAutoReverse(false);
+        moveTransition.setCycleCount(1);
+        moveTransition.play();
+        moveTransition.setOnFinished(e -> {
+            throw_ball.setX(throw_ball.getX() + deltaX);
+            throw_ball.setY(throw_ball.getY() + deltaY);
+            throw_ball.setTranslateX(0);
+            throw_ball.setTranslateY(0);
+            throw_ball.setOpacity(0);
+            catch_time();
+        });
+    }
+
+    private void catch_time(){
+        catch_ball.setOpacity(1);
+        wildPokemonImageView.setOpacity(0);
+        FadeTransition fadeTransition_catch = new FadeTransition(Duration.seconds(3d), catch_ball);
+        fadeTransition_catch.setFromValue(1.0);
+        fadeTransition_catch.setToValue(0.0);
+        fadeTransition_catch.setCycleCount(1);
+        fadeTransition_catch.play();
+        FadeTransition fadeTransition_wild = new FadeTransition(Duration.seconds(3d), catch_ball);
+        fadeTransition_wild.setFromValue(1.0);
+        fadeTransition_wild.setToValue(0.0);
+        fadeTransition_wild.setCycleCount(1);
+        fadeTransition_wild.play();
+        fadeTransition_wild.setOnFinished(e -> {
+            wildPokemonImageView.setOpacity(1);
+        });
+
+    }
+
 
     public void start(Stage stage){}
     public static void main(String[] args){launch(args);}

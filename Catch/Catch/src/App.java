@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -21,7 +22,6 @@ public class App extends Application {
     private ImageView[][] pokemon_grid = new ImageView[2][3];
     private Pokemon user_pokemon;
     Pokemon wild = Pokemon.PIKACHU;
-    // private Group pokemonGrid = new Group();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -49,32 +49,37 @@ public class App extends Application {
     private void changeName(Stage primaryStage) {
         primaryStage.close();
 
-
         String newName = nameField.getText();
         user.setUserName(newName);
         String welcomeMessage = user.getUserName() + "님 환영합니다.";
 
-        showWelcomeMessage(primaryStage, welcomeMessage);
-    }
+        ImageView pokemon_banner = new ImageView(Effect.POKE.getImage());
+        pokemon_banner.setFitHeight(80); // 세로
+        pokemon_banner.setFitWidth(250); // 가로
+        StackPane.setAlignment(pokemon_banner,Pos.CENTER);
+        
 
-    private void showWelcomeMessage(Stage primaryStage, String welcomeMessage) {
-        GridPane welcomePane = new GridPane();
-        welcomePane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        welcomePane.setPadding(new Insets(20));
-        welcomePane.setHgap(10);
+        // GridPane welcomePane = new GridPane();
+        // welcomePane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        // welcomePane.setPadding(new Insets(20));
+        // welcomePane.setHgap(10);
 
         Label welcomeLabel = new Label(welcomeMessage);
-        welcomeLabel.setTextFill(Color.WHITE);
-        welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        welcomeLabel.setTextFill(Color.BLACK);
+        welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        StackPane.setAlignment(welcomeLabel, Pos.BOTTOM_CENTER);
 
-        welcomePane.add(welcomeLabel, 0, 0);
-        welcomePane.setAlignment(Pos.CENTER);
+        // welcomePane.add(welcomeLabel, 0, 0);
+        // welcomePane.setAlignment(Pos.CENTER);
+
+        StackPane root = new StackPane();
+        root.getChildren().addAll(welcomeLabel, pokemon_banner);
 
         Stage welcomeStage = new Stage();
-        welcomeStage.setScene(new Scene(welcomePane, 500, 300));
+        welcomeStage.setScene(new Scene(root, 500, 300));
         welcomeStage.setTitle("WelCome Mesege");
         welcomeStage.show();
-        welcomePane.setOnMouseClicked(event -> goToNextScreen(welcomeStage));
+        root.setOnMouseClicked(event -> goToNextScreen(welcomeStage));
     }
 
     private void goToNextScreen(Stage currentStage) {
@@ -164,20 +169,28 @@ public class App extends Application {
         welcomePane_2.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         welcomePane_2.setPadding(new Insets(20));
         welcomePane_2.setHgap(10);
+        StackPane root = new StackPane();
+        ImageView before = new ImageView(Effect.BEFROEWILD.getImage());
+        // root.getChildren().addAll(before);
+        before.setFitHeight(300);
+        before.setFitWidth(500);
+        StackPane.setAlignment(before, Pos.CENTER);
+        // before.setRow
 
         Label welcomeLabel_2 = new Label("야생 피카츄를 만났습니다.");
-        welcomeLabel_2.setTextFill(Color.WHITE);
-        welcomeLabel_2.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-
-        welcomePane_2.add(welcomeLabel_2, 0, 0);
-        welcomePane_2.setAlignment(Pos.CENTER);
+        welcomeLabel_2.setTextFill(Color.BLACK);
+        welcomeLabel_2.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 30));
+        StackPane.setAlignment(welcomeLabel_2, Pos.BOTTOM_CENTER);
+        // welcomePane_2.add(welcomeLabel_2, 0, 0);
+        // welcomePane_2.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(before, welcomeLabel_2);
 
         Stage welcomeStage_2 = new Stage();
-        welcomeStage_2.setScene(new Scene(welcomePane_2, 500, 300));
+        welcomeStage_2.setScene(new Scene(root, 400, 250));
         welcomeStage_2.setTitle("WelCome Mesege");
         welcomeStage_2.show();
 
-        welcomePane_2.setOnMouseClicked(event -> prepare_battle(welcomeStage_2));
+        root.setOnMouseClicked(event -> prepare_battle(welcomeStage_2));
     }
 
     private void prepare_battle(Stage currenStage){
@@ -188,7 +201,7 @@ public class App extends Application {
         welcomePane_2.setPadding(new Insets(20));
         welcomePane_2.setHgap(10);
 
-        Label welcomeLabel_2 = new Label("당신의 포켓몬을 이용해서 \n야생 피카추를 잡아주세요.");
+        Label welcomeLabel_2 = new Label("당신의 포켓몬을 이용해서 \n야생 피카츄를 잡아주세요.");
         welcomeLabel_2.setTextFill(Color.WHITE);
         welcomeLabel_2.setFont(Font.font("Arial", FontWeight.BOLD, 30));
 
