@@ -9,6 +9,10 @@ public class Charmander_skill implements Skill{
         return skill;
     }
 
+    public String getName(){
+        return "파이리";
+    }
+
     @Override
     public int first(int hp){
         return 40;

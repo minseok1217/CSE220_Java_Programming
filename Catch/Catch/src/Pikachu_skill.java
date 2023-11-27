@@ -10,6 +10,11 @@ public class Pikachu_skill implements Skill{
         return skill;
     }
 
+
+    public String getName(){
+        return "피카츄";
+    }
+
     @Override
     public int first(int hp){
         return hp - 120;

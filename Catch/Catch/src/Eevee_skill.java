@@ -5,6 +5,11 @@ public class Eevee_skill implements Skill{
         "돌진 90",
         "물기 60"
     };
+
+    public String getName(){
+        return "이브이";
+    }
+
     public String[] getSkills() {
         return skill;
     }

@@ -6,6 +6,10 @@ public class Bulbasaur_skill implements Skill {
         "잎날가르기\n55"
     };
 
+    public String getName(){
+        return "꼬부기";
+    }
+
     @Override
     public String[] getSkills() {
         return skill;

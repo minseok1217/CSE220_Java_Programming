@@ -5,6 +5,11 @@ public class Cyndaquil_skill implements Skill{
         "화염방사 95",
         "분연 80"
     };
+
+    public String getName(){
+        return "브케인";
+    }
+
     public String[] getSkills() {
         return skill;
     }

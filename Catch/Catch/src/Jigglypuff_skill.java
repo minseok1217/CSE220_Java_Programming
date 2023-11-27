@@ -9,6 +9,10 @@ public class Jigglypuff_skill implements Skill{
         return skill;
     }
 
+    public String getName(){
+        return "푸린";
+    }
+
     @Override
     public int first(int hp){
         return hp - 120;

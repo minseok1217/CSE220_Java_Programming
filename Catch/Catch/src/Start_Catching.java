@@ -1,3 +1,5 @@
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Start_Catching extends Application{
     private User user = new User();
@@ -29,6 +32,8 @@ public class Start_Catching extends Application{
     private Skill sk;
     private String[] Skill_name;
     private Skill wild_skill = new Pikachu_skill();
+    private ImageView explossion_wild = new ImageView(Effect.EXPLOSION.getImage());
+    private ImageView explossion_user = new ImageView(Effect.EXPLOSION.getImage());
     
 
 
@@ -89,6 +94,20 @@ public class Start_Catching extends Application{
         monsterball.setFitHeight(80);
         StackPane.setAlignment(monsterball, Pos.BOTTOM_RIGHT);
 
+        explossion_wild.setFitWidth(100);
+        explossion_wild.setFitHeight(100);
+        explossion_wild.setOpacity(0);
+        explossion_wild.setTranslateX(220);
+        explossion_wild.setTranslateY(-110);
+        root.getChildren().add(explossion_wild);
+
+        explossion_user.setFitWidth(100);
+        explossion_user.setFitHeight(100);
+        explossion_user.setOpacity(0);
+        explossion_user.setTranslateX(-205);
+        explossion_user.setTranslateY(105);
+        root.getChildren().add(explossion_user);
+
         Button skillButton_1 = new Button(Skill_name[0]);
         skillButton_1.setPrefWidth(110);
         skillButton_1.setPrefHeight(90);
@@ -118,6 +137,8 @@ public class Start_Catching extends Application{
 
         Label userPokemonHpLabel = new Label("체력: " + Integer.toString(user_hp));
         Label wildPokemonHpLabel = new Label("체력: " + Integer.toString(wild_hp));
+        // Label skill_explain = new Label("공격격");
+
 
         GridPane.setRowIndex(userPokemonHpLabel, 2); 
         GridPane.setColumnIndex(userPokemonHpLabel, 0); 
@@ -129,36 +150,70 @@ public class Start_Catching extends Application{
         wildPokemonHpLabel.setTranslateY(55);
         wildPokemonHpLabel.setTranslateX(10);
 
+        // skill_explain.setOpacity(1);
+        // GridPane.setRowIndex(skill_explain, 0);
+        // GridPane.setColumnIndex(skill_explain, 0);
+        // battle_stage.getChildren().add(skill_explain);
+
+
         Scene battleScene = new Scene(root, 600, 400);
         Stage battleStage = new Stage();
         battleStage.setScene(battleScene);
         battleStage.setTitle("Battle");
         battleStage.show();
 
+        
         skillButton_1.setOnAction(event -> {
             wild_hp = sk.first(wild_hp);
             user_hp = attack(user_hp);
-            // System.out.println("111");
-            userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
-            wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
-        });
+            Twinkle_wild();
+            wildPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event2 -> {
+                Twinkle_user();
+                
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+            });
+            pause.play();
+            });
         skillButton_2.setOnAction(event -> {
             wild_hp = sk.second(wild_hp);
             user_hp = attack(user_hp);
-            userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+            Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
-        });
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event2 -> {
+                Twinkle_user();
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                
+            });
+            pause.play();
+            });
         skillButton_3.setOnAction(event -> {
             wild_hp = sk.third(wild_hp);
             user_hp = attack(user_hp);
-            userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+            Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event2 -> {
+                Twinkle_user();
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                
+            });
+            pause.play();
         });
         skillButton_4.setOnAction(event -> {
             wild_hp = sk.fourth(wild_hp);
             user_hp = attack(user_hp);
-            userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+            Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event2 -> {
+                Twinkle_user();
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                
+            });
+            pause.play();
         });
         monsterball.setOnMouseClicked(event ->{
             double d = Math.random();
@@ -240,6 +295,38 @@ public class Start_Catching extends Application{
                 return wild_skill.fourth(hp);
             }
             // return hp;
+    }
+
+    private void Delay_time(int s){
+        try {
+                Thread.sleep(s);
+                
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+    }
+
+    private void Twinkle_user(){
+        // FadeTransition fadeTransition_user = new FadeTransition(Duration.seconds(1d), explossion_user);
+        // fadeTransition_user.setFromValue(1.0);
+        // fadeTransition_user.setToValue(0.0);
+        // fadeTransition_user.setCycleCount(1);
+        // fadeTransition_user.play();
+        explossion_user.setOpacity(1); 
+        FadeTransition fadeTransition_user = new FadeTransition(Duration.seconds(1d), explossion_user);
+        fadeTransition_user.setFromValue(1.0);
+        fadeTransition_user.setToValue(0.0);
+        fadeTransition_user.setCycleCount(1);
+        fadeTransition_user.play();
+    }
+
+    private void Twinkle_wild(){
+        
+        FadeTransition fadeTransition_wild = new FadeTransition(Duration.seconds(1d), explossion_wild);
+        fadeTransition_wild.setFromValue(1.0);
+        fadeTransition_wild.setToValue(0.0);
+        fadeTransition_wild.setCycleCount(1);
+        fadeTransition_wild.play();
     }
 
     public void start(Stage stage){}
