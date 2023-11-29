@@ -207,8 +207,6 @@ public class Start_Catching extends Application{
                 explain_label_wild.setOpacity(1);
                 explain_label_wild.setTextFill(Color.WHITE);
                 explain_label_wild.setFont(Font.font("Arial", FontWeight.BOLD, 30));
-                System.out.println(wild_skill.getName());
-                System.out.println(wild_skill.getSkills()[0]);
                 explain_label_wild.setText(wild_skill.getName()+ "의\n" + wild_skill.getSkills()[0]);
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 if(user_hp < 1){
@@ -219,6 +217,10 @@ public class Start_Catching extends Application{
             pause.play();
             });
         skillButton_2.setOnAction(event -> {
+            explain_label.setText(sk.getName()+ "의\n" + sk.getSkills()[1]);
+            explain_label.setOpacity(1);
+            explain_label.setTextFill(Color.WHITE);
+            explain_label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
             wild_hp = sk.second(wild_hp);
             user_hp = attack(user_hp);
             Twinkle_wild();
@@ -229,6 +231,12 @@ public class Start_Catching extends Application{
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
+                explain_label.setOpacity(0);
+                explain_label_wild.setOpacity(1);
+                explain_label_wild.setTextFill(Color.WHITE);
+                explain_label_wild.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+                explain_label_wild.setText(wild_skill.getName()+ "의\n" + wild_skill.getSkills()[1]);
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 if(user_hp < 1){
                     down_user(battleStage);
@@ -241,6 +249,10 @@ public class Start_Catching extends Application{
             wild_hp = sk.third(wild_hp);
             user_hp = attack(user_hp);
             Twinkle_wild();
+            explain_label.setText(sk.getName()+ "의\n" + sk.getSkills()[2]);
+            explain_label.setOpacity(1);
+            explain_label.setTextFill(Color.WHITE);
+            explain_label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
             if(wild_hp < 1){
                 down_picacu(battleStage);
@@ -248,6 +260,13 @@ public class Start_Catching extends Application{
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
+                explain_label.setOpacity(0);
+                explain_label_wild.setOpacity(1);
+                explain_label_wild.setTextFill(Color.WHITE);
+                explain_label_wild.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+                explain_label_wild.setText(wild_skill.getName()+ "의\n" + wild_skill.getSkills()[2]);
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 if(user_hp < 1){
                     down_user(battleStage);
@@ -259,6 +278,10 @@ public class Start_Catching extends Application{
             wild_hp = sk.fourth(wild_hp);
             user_hp = attack(user_hp);
             Twinkle_wild();
+            explain_label.setText(sk.getName()+ "의\n" + sk.getSkills()[3]);
+            explain_label.setOpacity(1);
+            explain_label.setTextFill(Color.WHITE);
+            explain_label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
             if(wild_hp < 1){
                 down_picacu(battleStage);
@@ -266,6 +289,13 @@ public class Start_Catching extends Application{
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
+                explain_label.setOpacity(0);
+                explain_label_wild.setOpacity(1);
+                explain_label_wild.setTextFill(Color.WHITE);
+                explain_label_wild.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+                explain_label_wild.setText(wild_skill.getName()+ "의\n" + wild_skill.getSkills()[3]);
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
                 if(user_hp < 1){
                     down_user(battleStage);
@@ -276,10 +306,7 @@ public class Start_Catching extends Application{
         monsterball.setOnMouseClicked(event ->{
             
             move(450.0, -300.0, battleStage);
-            // catch_time();    
-            
-            // System.out.println(wild_hp);
-            // System.out.println(String.format("%f %f", d, percent));
+
             
         });
     }
@@ -464,6 +491,7 @@ public class Start_Catching extends Application{
         fadeTransition_wild.setCycleCount(1);
         fadeTransition_wild.play();
         fadeTransition_wild.setOnFinished(e -> {
+            
             wildPokemonImageView.setOpacity(1);
             double d = Math.random();
             double percent = (600.0 - wild_hp) / 600;

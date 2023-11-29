@@ -1,7 +1,7 @@
 public class Charmander_skill implements Skill{
     private String[] skill = {
         "불꽃세례 40",
-        "플레어드라이브 120",
+        "플레어드라이브\n120",
         "연옥 100",
         "화염방사 90"
     };

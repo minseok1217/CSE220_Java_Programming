@@ -1,7 +1,7 @@
 public class Eevee_skill implements Skill{
     private String[] skill = {
         "뒀다쓰기 140",
-        "이판사판태클 120",
+        "이판사판태클\n120",
         "돌진 90",
         "물기 60"
     };

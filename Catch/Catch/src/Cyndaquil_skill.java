@@ -1,7 +1,7 @@
 public class Cyndaquil_skill implements Skill{
     private String[] skill = {
         "분화 150",
-        "이판사판태클 120",
+        "이판사판태클\n120",
         "화염방사 95",
         "분연 80"
     };

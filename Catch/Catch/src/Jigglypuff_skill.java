@@ -1,8 +1,8 @@
 public class Jigglypuff_skill implements Skill{
     private String[] skill = {
-        "이판사판태클 120",
+        "이판사판태클\n120",
         "치근거리기 90",
-        "하이퍼보이스 90",
+        "하이퍼보이스\n90",
         "누르기 85"
     };
     public String[] getSkills() {

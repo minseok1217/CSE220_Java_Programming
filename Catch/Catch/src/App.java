@@ -22,6 +22,13 @@ public class App extends Application {
     private ImageView[][] pokemon_grid = new ImageView[2][3];
     private Pokemon user_pokemon;
     Pokemon wild = Pokemon.PIKACHU;
+    private Pokemon getDesiredPokemon(int row, int col) {
+        Pokemon[][] pokemonGrid = {
+                {Pokemon.BULBASAUR, Pokemon.CHARMANDER, Pokemon.CYNDAQUIL},
+                {Pokemon.EEVEE, Pokemon.JIGGLYPUFF, Pokemon.SQUIRTLE}
+        };
+        return pokemonGrid[row][col];
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -99,17 +106,9 @@ public class App extends Application {
 
         Stage welcomeStage_2 = new Stage();
         welcomeStage_2.setScene(new Scene(welcomePane_2, 500, 300));
-        welcomeStage_2.setTitle("WelCome Mesege");
+        welcomeStage_2.setTitle("WelCome Mesege_2");
         welcomeStage_2.show();
         welcomePane_2.setOnMouseClicked(event -> selectPokemonScreen(welcomeStage_2));
-    }
-
-    private Pokemon getDesiredPokemon(int row, int col) {
-        Pokemon[][] pokemonGrid = {
-                {Pokemon.BULBASAUR, Pokemon.CHARMANDER, Pokemon.CYNDAQUIL},
-                {Pokemon.EEVEE, Pokemon.JIGGLYPUFF, Pokemon.SQUIRTLE}
-        };
-        return pokemonGrid[row][col];
     }
 
     private void addClickEventHandler(ImageView imageView) {
@@ -158,7 +157,7 @@ public class App extends Application {
         }
         Stage seleteStage_2 = new Stage();
         seleteStage_2.setScene(new Scene(seletePane, 300, 250));
-        seleteStage_2.setTitle("WelCome Mesege");
+        seleteStage_2.setTitle("select Pokemon");
         seleteStage_2.show();
         seletePane.setOnMouseClicked(event -> before_battle(seleteStage_2));
     }
@@ -188,7 +187,7 @@ public class App extends Application {
 
         Stage welcomeStage_2 = new Stage();
         welcomeStage_2.setScene(new Scene(root, 400, 250));
-        welcomeStage_2.setTitle("WelCome Mesege");
+        welcomeStage_2.setTitle("befor find wild pikachu");
         welcomeStage_2.show();
 
         root.setOnMouseClicked(event -> prepare_battle(welcomeStage_2));
@@ -211,7 +210,7 @@ public class App extends Application {
 
         Stage welcomeStage_2 = new Stage();
         welcomeStage_2.setScene(new Scene(welcomePane_2, 500, 300));
-        welcomeStage_2.setTitle("WelCome Mesege");
+        welcomeStage_2.setTitle("explain how to play this game");
         welcomeStage_2.show();
 
         welcomePane_2.setOnMouseClicked(event -> {

@@ -1,7 +1,7 @@
 public class Squirtle_skill implements Skill{
     private String[] skill = {
-        "로케트박치기 130",
-        "하이드로펌프 110",
+        "로케트박치기\n130",
+        "하이드로펌프\n110",
         "아쿠아테일 90",
         "물의파동 60"
     };
