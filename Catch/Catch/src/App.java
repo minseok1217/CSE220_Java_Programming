@@ -123,6 +123,7 @@ public class App extends Application {
             for (int j = 0; j < pokemon_grid[i].length; j++) {
                 if (pokemon_grid[i][j] == selectedImageView) {
                     Pokemon selectedPokemon = getDesiredPokemon(i, j);
+                    System.out.println("1");
                     return selectedPokemon;
                 }
             }

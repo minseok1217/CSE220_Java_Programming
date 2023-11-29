@@ -40,6 +40,9 @@ public class Start_Catching extends Application{
     private ImageView catch_ball = new ImageView(Pokemon.BALL.getImage());
     ImageView birthday_left = new ImageView(Effect.BIRTHDAY_LEFT.getImage());
     ImageView birthday_right = new ImageView(Effect.BIRTHDAY_RIGHT.getImage());
+    Label userPokemonHpLabel = new Label("체력: " + Integer.toString(user_hp));
+    private Label explain_label = new Label();
+    private Label explain_label_wild = new Label();
     
 
 
@@ -62,7 +65,7 @@ public class Start_Catching extends Application{
 
         // 본격적으로 시작한다.        
         GridPane battle_stage = new GridPane();
-        battle_stage.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        // battle_stage.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         battle_stage.setPadding(new Insets(20));
         battle_stage.setHgap(10);
 
@@ -95,9 +98,14 @@ public class Start_Catching extends Application{
 
         ImageView monsterball = new ImageView(Pokemon.BALL.getImage());
         
+        ImageView backgroundImage = new ImageView(Effect.BATTLE_BACKGROUND.getImage());
+        backgroundImage.setFitHeight(300);
+        backgroundImage.setFitWidth(500);
+        StackPane.setAlignment(backgroundImage, Pos.CENTER);
 
         StackPane root = new StackPane();
-        root.getChildren().addAll(battle_stage, monsterball, throw_ball, catch_ball);
+        // root.getChildren().addAll(backgroundImage);
+        root.getChildren().addAll(backgroundImage, battle_stage, monsterball, throw_ball, catch_ball, explain_label, explain_label_wild);
         monsterball.setFitWidth(80);
         monsterball.setFitHeight(80);
         throw_ball.setFitHeight(50);
@@ -107,7 +115,12 @@ public class Start_Catching extends Application{
         catch_ball.setFitHeight(50);
         catch_ball.setFitWidth(50);
         catch_ball.setOpacity(0);
-        
+
+        //게임의 진행상황을 알려주기 위해 만든 것
+        explain_label.setOpacity(0);
+        explain_label_wild.setOpacity(0);
+        StackPane.setAlignment(explain_label, Pos.TOP_LEFT);
+        StackPane.setAlignment(explain_label_wild, Pos.TOP_LEFT);
         StackPane.setAlignment(catch_ball, Pos.TOP_RIGHT);
         StackPane.setAlignment(throw_ball, Pos.BOTTOM_LEFT);
         StackPane.setAlignment(monsterball, Pos.BOTTOM_RIGHT);        
@@ -153,7 +166,7 @@ public class Start_Catching extends Application{
         skillButton_4.setStyle("-fx-background-color: #000000; -fx-text-fill: #FFFFFF;");
         battle_stage.add(grid, 1, 1);
 
-        Label userPokemonHpLabel = new Label("체력: " + Integer.toString(user_hp));
+        
         Label wildPokemonHpLabel = new Label("체력: " + Integer.toString(wild_hp));
 
         GridPane.setRowIndex(userPokemonHpLabel, 2); 
@@ -166,22 +179,42 @@ public class Start_Catching extends Application{
         wildPokemonHpLabel.setTranslateY(55);
         wildPokemonHpLabel.setTranslateX(10);
 
-        Scene battleScene = new Scene(root, 600, 400);
+        Scene battleScene = new Scene(root, 500, 300);
         Stage battleStage = new Stage();
         battleStage.setScene(battleScene);
         battleStage.setTitle("Battle");
         battleStage.show();
 
         skillButton_1.setOnAction(event -> {
+            explain_label.setText(sk.getName()+ "의\n" + sk.getSkills()[0]);
+            explain_label.setOpacity(1);
+            explain_label.setTextFill(Color.WHITE);
+            explain_label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+            // explain_label.setOpa
             wild_hp = sk.first(wild_hp);
             user_hp = attack(user_hp);
+            
             Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
+            if(wild_hp < 1){
+                down_picacu(battleStage);
+                
+            }
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
-                
+                explain_label.setOpacity(0);
+                explain_label_wild.setOpacity(1);
+                explain_label_wild.setTextFill(Color.WHITE);
+                explain_label_wild.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+                System.out.println(wild_skill.getName());
+                System.out.println(wild_skill.getSkills()[0]);
+                explain_label_wild.setText(wild_skill.getName()+ "의\n" + wild_skill.getSkills()[0]);
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                if(user_hp < 1){
+                    down_user(battleStage);
+                }
+
             });
             pause.play();
             });
@@ -190,10 +223,16 @@ public class Start_Catching extends Application{
             user_hp = attack(user_hp);
             Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
+            if(wild_hp < 1){
+                down_picacu(battleStage);
+            }
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                if(user_hp < 1){
+                    down_user(battleStage);
+                }
                 
             });
             pause.play();
@@ -203,11 +242,16 @@ public class Start_Catching extends Application{
             user_hp = attack(user_hp);
             Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
+            if(wild_hp < 1){
+                down_picacu(battleStage);
+            }
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
-                
+                if(user_hp < 1){
+                    down_user(battleStage);
+                }
             });
             pause.play();
         });
@@ -216,24 +260,27 @@ public class Start_Catching extends Application{
             user_hp = attack(user_hp);
             Twinkle_wild();
             wildPokemonHpLabel.setText("체력: " + Integer.toString(wild_hp));
+            if(wild_hp < 1){
+                down_picacu(battleStage);
+            }
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event2 -> {
                 Twinkle_user();
                 userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
-                
+                if(user_hp < 1){
+                    down_user(battleStage);
+                }
             });
             pause.play();
         });
         monsterball.setOnMouseClicked(event ->{
-            double d = Math.random();
-            move(450.0, -300.0);
+            
+            move(450.0, -300.0, battleStage);
             // catch_time();    
-            double percent = (600.0 - wild_hp) / 600;
-            System.out.println(wild_hp);
-            System.out.println(String.format("%f %f", d, percent));
-            if(d < percent){
-                success(battleStage);
-            }
+            
+            // System.out.println(wild_hp);
+            // System.out.println(String.format("%f %f", d, percent));
+            
         });
     }
     
@@ -260,11 +307,46 @@ public class Start_Catching extends Application{
         StackPane.setAlignment(successLabel, Pos.BOTTOM_CENTER);
     
         Stage successStage = new Stage();
-        successStage.setScene(new Scene(successPane, 500, 300)  );
+        successStage.setScene(new Scene(successPane, 500, 300));
         successStage.setTitle("FINISH");
         successStage.show();
     }
     
+    private void down_picacu(Stage curentStage){
+        curentStage.close();
+
+        Label picacu_down_label = new Label("피카츄가 기절해서 실패했습니다.");
+        picacu_down_label.setTextFill(Color.BLACK);
+        picacu_down_label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        StackPane.setAlignment(picacu_down_label,Pos.BOTTOM_CENTER);
+
+        StackPane root = new StackPane();
+        ImageView run = new ImageView(Effect.DOWN.getImage());
+        root.getChildren().addAll(run, picacu_down_label);
+        StackPane.setAlignment(run, Pos.CENTER);
+        Stage successStage = new Stage();
+        successStage.setScene(new Scene(root, 500, 300)  );
+        successStage.setTitle("FINISH");
+        successStage.show();
+    }
+
+    private void down_user(Stage currentStage){
+        currentStage.close();
+
+        Label picacu_down_label = new Label(user.getUserName() + "피가 기절해서 실패했습니다.");
+        picacu_down_label.setTextFill(Color.BLACK);
+        picacu_down_label.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        StackPane.setAlignment(picacu_down_label,Pos.BOTTOM_CENTER);
+
+        StackPane root = new StackPane();
+        ImageView run = new ImageView(Effect.USER_DOWN.getImage());
+        root.getChildren().addAll(run, picacu_down_label);
+        StackPane.setAlignment(run, Pos.CENTER);
+        Stage successStage = new Stage();
+        successStage.setScene(new Scene(root, 500, 300)  );
+        successStage.setTitle("FINISH");
+        successStage.show();
+    }
 
     public Skill find(Pokemon pk){
         if(pk == Pokemon.BULBASAUR){
@@ -294,7 +376,7 @@ public class Start_Catching extends Application{
     }
 
     public int attack(int hp){
-            int dValue = (int)((Math.random() * 10)  / 4);
+            int dValue = (int)((Math.random() * 10)  % 4);
             if(dValue == 0){
                 return wild_skill.first(hp);
             }
@@ -323,6 +405,7 @@ public class Start_Catching extends Application{
         fadeTransition_user.setToValue(0.0);
         fadeTransition_user.setCycleCount(1);
         fadeTransition_user.play();
+        fadeTransition_user.setOnFinished(event_ -> explain_label_wild.setOpacity(0));
     }
 
     private void Twinkle_wild(){
@@ -332,6 +415,7 @@ public class Start_Catching extends Application{
         fadeTransition_wild.setToValue(0.0);
         fadeTransition_wild.setCycleCount(1);
         fadeTransition_wild.play();
+        
     }
 
     private void Twinkle_birthday(){
@@ -348,7 +432,7 @@ public class Start_Catching extends Application{
         fadeTransition_birthday_right.play();
     }
 
-    private void move(double deltaX , double deltaY ) {
+    private void move(double deltaX , double deltaY, Stage currentStage) {
         throw_ball.setOpacity(1);
         TranslateTransition moveTransition = new TranslateTransition(Duration.millis(MOVEMENT_SPEED), throw_ball);
         moveTransition.setByX(deltaX);
@@ -362,11 +446,11 @@ public class Start_Catching extends Application{
             throw_ball.setTranslateX(0);
             throw_ball.setTranslateY(0);
             throw_ball.setOpacity(0);
-            catch_time();
+            catch_time(currentStage);
         });
     }
 
-    private void catch_time(){
+    private void catch_time(Stage currentStage){
         catch_ball.setOpacity(1);
         wildPokemonImageView.setOpacity(0);
         FadeTransition fadeTransition_catch = new FadeTransition(Duration.seconds(3d), catch_ball);
@@ -381,6 +465,19 @@ public class Start_Catching extends Application{
         fadeTransition_wild.play();
         fadeTransition_wild.setOnFinished(e -> {
             wildPokemonImageView.setOpacity(1);
+            double d = Math.random();
+            double percent = (600.0 - wild_hp) / 600;
+            if(d < percent){
+                success(currentStage);
+            }
+            else{
+                user_hp = attack(user_hp);
+                Twinkle_user();
+                userPokemonHpLabel.setText("체력: " + Integer.toString(user_hp));
+                if(user_hp < 1){
+                    down_user(currentStage);
+                }
+            }
         });
 
     }

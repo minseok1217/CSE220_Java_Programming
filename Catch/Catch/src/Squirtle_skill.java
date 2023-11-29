@@ -9,6 +9,10 @@ public class Squirtle_skill implements Skill{
         return skill;
     }
 
+    public String getName(){
+        return "꼬부기";
+    }
+
     @Override
     public int first(int hp){
         return hp - 130;
