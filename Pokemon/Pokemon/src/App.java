@@ -228,13 +228,7 @@ public class App extends Application {
         });
     }
     // private void showCatchPokemonScreen() {
-    //     Catch_pokemon catchPokemon = new Catch_pokemon(user_pokemon);
-    //     try {
-    //         catchPokemon.run();
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+    //
 
     // private void start_battle(Stage currentStage){
     //     currentStage.close();
